@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { AppProvider } from "@/context/app-context";
 import { AuthGuard } from "@/components/layout/auth-guard";
-import { APP_NAME, APP_TAGLINE } from "@/lib/data";
+import { APP_NAME, APP_TAGLINE, CAMPUS_NAME } from "@/lib/data";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,7 +14,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: `${APP_NAME} – ${APP_TAGLINE}`,
   description:
-    "Order food from campus cafes, earn rewards, top up your student wallet, and pay with QR. Built for UiTM students.",
+    `Order food from ${CAMPUS_NAME} outlets, earn rewards, top up your student wallet, and pay with QR on campus.`,
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,

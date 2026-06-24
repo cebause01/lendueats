@@ -32,7 +32,7 @@ export default function CheckoutPage() {
   } = useApp();
   const cafe = activeCafeId ? getCafeById(activeCafeId) : null;
   const [isPreOrder, setIsPreOrder] = useState(false);
-  const [pickupSlot, setPickupSlot] = useState(preOrderSlots[1].id);
+  const [pickupSlot, setPickupSlot] = useState(preOrderSlots[3].id);
   const [paymentMethod, setPaymentMethod] = useState("wallet");
   const [success, setSuccess] = useState(false);
   const [orderId, setOrderId] = useState("");
@@ -139,7 +139,7 @@ export default function CheckoutPage() {
               <Clock className="size-4" />
               Pickup Time
             </Label>
-            <div className="mt-2 space-y-2">
+            <div className="mt-2 grid grid-cols-3 gap-2">
               {preOrderSlots.map((slot) => (
                 <button
                   key={slot.id}
@@ -147,18 +147,15 @@ export default function CheckoutPage() {
                   disabled={!slot.available}
                   onClick={() => setPickupSlot(slot.id)}
                   className={cn(
-                    "flex w-full items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-colors disabled:opacity-40",
+                    "rounded-xl border-2 px-2 py-3 text-center transition-colors disabled:opacity-40",
                     pickupSlot === slot.id
                       ? "border-primary bg-primary/5"
                       : "border-border"
                   )}
                 >
-                  <div>
-                    <p className="text-sm font-medium">{slot.label}</p>
-                    <p className="text-xs text-muted-foreground">{slot.time}</p>
-                  </div>
+                  <p className="text-sm font-semibold">{slot.time}</p>
                   {!slot.available && (
-                    <span className="text-xs text-muted-foreground">Full</span>
+                    <p className="mt-1 text-[10px] text-muted-foreground">Full</p>
                   )}
                 </button>
               ))}

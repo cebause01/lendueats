@@ -79,7 +79,6 @@ export interface Order {
 
 export interface PreOrderSlot {
   id: string;
-  label: string;
   time: string;
   available: boolean;
 }

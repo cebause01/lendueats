@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { APP_NAME, APP_TAGLINE } from "@/lib/data";
+import { APP_NAME, APP_TAGLINE, CAMPUS_NAME } from "@/lib/data";
 import { brandAssets } from "@/lib/brand";
 import { useApp } from "@/context/app-context";
 
@@ -33,7 +33,7 @@ export default function SplashPage() {
         <h1 className="mt-8 text-3xl font-bold tracking-tight">{APP_NAME}</h1>
         <p className="mt-2 text-center text-sm text-white/90">{APP_TAGLINE}</p>
         <p className="mt-6 text-xs font-medium tracking-wide text-uitm-gold uppercase">
-          UiTM Students
+          {CAMPUS_NAME} Students
         </p>
         <div className="mt-10 flex gap-1.5">
           {[0, 1, 2].map((i) => (

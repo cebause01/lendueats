@@ -14,6 +14,12 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import {
+  CAMPUS_NAME,
+  CAMPUS_SUPPORT_EMAIL,
+  CAMPUS_SUPPORT_PHONE,
+  CAMPUS_SUPPORT_PHONE_DISPLAY,
+} from "@/lib/data";
 import { toast } from "sonner";
 
 const faqs = [
@@ -56,7 +62,7 @@ export default function HelpPage() {
           <CardContent className="p-5 text-center">
             <p className="font-medium text-uitm-navy">Need assistance?</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Our campus support team is here to help
+              {CAMPUS_NAME} campus support is here to help
             </p>
             <div className="mt-4 flex flex-col gap-2">
               <Button
@@ -71,21 +77,21 @@ export default function HelpPage() {
                 variant="outline"
                 className="w-full gap-2 bg-white"
                 onClick={() => {
-                  window.location.href = "tel:+60355442000";
+                  window.location.href = `tel:${CAMPUS_SUPPORT_PHONE}`;
                 }}
               >
                 <Phone className="size-4" />
-                Call 03-5544 2000
+                Call {CAMPUS_SUPPORT_PHONE_DISPLAY}
               </Button>
               <Button
                 variant="outline"
                 className="w-full gap-2 bg-white"
                 onClick={() => {
-                  window.location.href = "mailto:support@kampuskafe.my";
+                  window.location.href = `mailto:${CAMPUS_SUPPORT_EMAIL}`;
                 }}
               >
                 <Mail className="size-4" />
-                Email Support
+                Email {CAMPUS_SUPPORT_EMAIL}
               </Button>
             </div>
           </CardContent>

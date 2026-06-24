@@ -15,7 +15,7 @@ const notifications = [
   {
     id: "n-1",
     title: "Order Ready for Pickup",
-    body: "Your order ORD-2847 at Kafe FSKM is being prepared. Pickup at 12:30 PM.",
+    body: "Your order ORD-2847 at Kafe FHTM Lendu is being prepared. Pickup at 12:30 PM.",
     time: "10 min ago",
     unread: true,
     href: "/orders",
@@ -42,7 +42,7 @@ const notifications = [
   {
     id: "n-4",
     title: "New Reward Available",
-    body: "Redeem a free Latte at Bean & Brew for 300 points.",
+    body: "Redeem a free Latte at Bean & Brew Lendu for 300 points.",
     time: "2 days ago",
     unread: false,
     href: "/rewards",

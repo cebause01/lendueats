@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useApp } from "@/context/app-context";
-import { cafes, promoBanners, orders as seedOrders } from "@/lib/data";
+import { cafes, CAMPUS_NAME, promoBanners, orders as seedOrders } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const quickActions = [
@@ -44,7 +44,7 @@ export default function HomePage() {
       <div className="px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-6">
         <header className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-muted-foreground">Welcome back</p>
+            <p className="text-xs text-muted-foreground">{CAMPUS_NAME} · Welcome back</p>
             <h1 className="text-xl font-semibold tracking-tight">
               {student.name.split(" ")[0]}
             </h1>

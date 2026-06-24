@@ -9,7 +9,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { APP_NAME, APP_TAGLINE } from "@/lib/data";
+import { APP_NAME, APP_TAGLINE, CAMPUS_ADDRESS, CAMPUS_FULL_NAME, CAMPUS_NAME } from "@/lib/data";
 import { brandAssets } from "@/lib/brand";
 import { toast } from "sonner";
 
@@ -71,13 +71,13 @@ export default function AboutPage() {
         <Card className="border-border/60 bg-uitm-magenta-tint">
           <CardContent className="p-4 text-sm text-muted-foreground">
             <p>
-              KampusKafe is a campus food & convenience app prototype for{" "}
-              <span className="font-medium text-uitm-navy">
-                Universiti Teknologi MARA (UiTM)
-              </span>{" "}
-              students. Order food, top up your wallet, earn rewards, and pay with
-              QR across campus cafes.
+              {APP_NAME} is a campus food & convenience app for students at{" "}
+              <span className="font-medium text-uitm-navy">{CAMPUS_FULL_NAME}</span>
+              . Order food, top up your wallet, earn rewards, and pay with QR at
+              outlets across the Lendu campus — KPP1, KPP2, and residential
+              colleges.
             </p>
+            <p className="mt-2 text-xs">{CAMPUS_ADDRESS}</p>
           </CardContent>
         </Card>
 

@@ -1,7 +1,7 @@
 {
   "name": "KampusKafe – Campus Food & Convenience",
   "short_name": "KampusKafe",
-  "description": "Order food from campus cafes, earn rewards, top up wallet & pay with QR. For UiTM students.",
+  "description": "Order food from UiTM Lendu campus outlets, earn rewards, top up wallet & pay with QR.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

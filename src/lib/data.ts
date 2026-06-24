@@ -10,8 +10,16 @@ import type {
 } from "./types";
 import { images } from "./images";
 
+export const CAMPUS_NAME = "UiTM Lendu";
+export const CAMPUS_FULL_NAME =
+  "UiTM Cawangan Melaka Kampus Alor Gajah (Lendu)";
+export const CAMPUS_ADDRESS = "KM 26, Jalan Lendu, 78000 Alor Gajah, Melaka";
+export const CAMPUS_SUPPORT_PHONE = "+6065582000";
+export const CAMPUS_SUPPORT_PHONE_DISPLAY = "(+606) 558 2000";
+export const CAMPUS_SUPPORT_EMAIL = "pnc.inqka@uitm.edu.my";
+
 export const APP_NAME = "KampusKafe";
-export const APP_TAGLINE = "Campus Food & Convenience · UiTM";
+export const APP_TAGLINE = `Campus Food & Convenience · ${CAMPUS_NAME}`;
 
 export const DEMO_CREDENTIALS = {
   studentId: "2025893182",
@@ -23,7 +31,7 @@ export const student: Student = {
   name: "Mohammad Hadif",
   studentId: "2025893182",
   email: "hadif@student.uitm.edu.my",
-  faculty: "Faculty of Hotel & Tourism Management",
+  faculty: "Faculty of Hotel & Tourism Management (FHTM)",
   avatar: "MH",
   walletBalance: 48.5,
   points: 1240,
@@ -33,8 +41,8 @@ export const student: Student = {
 export const cafes: Cafe[] = [
   {
     id: "cafe-1",
-    name: "Kafe FSKM",
-    location: "FSKM Building, Level 1",
+    name: "Kafe FHTM Lendu",
+    location: "KPP1, Ground Floor",
     rating: 4.6,
     reviewCount: 328,
     openHours: "7:00 AM – 6:00 PM",
@@ -42,12 +50,12 @@ export const cafes: Cafe[] = [
     category: "Western & Local",
     prepTime: "10–15 min",
     isOpen: true,
-    tags: ["Halal", "Student Favourite"],
+    tags: ["Halal", "FHTM Training Kitchen"],
   },
   {
     id: "cafe-2",
-    name: "Warung Selera UiTM",
-    location: "Dewan Siswa, Ground Floor",
+    name: "Warung Selera Lendu",
+    location: "Dewan Bentara, KPP1",
     rating: 4.4,
     reviewCount: 512,
     openHours: "7:30 AM – 5:30 PM",
@@ -59,8 +67,8 @@ export const cafes: Cafe[] = [
   },
   {
     id: "cafe-3",
-    name: "Bean & Brew",
-    location: "Perpustakaan Tun Abdul Razak",
+    name: "Bean & Brew Lendu",
+    location: "Perpustakaan KPP1",
     rating: 4.8,
     reviewCount: 189,
     openHours: "8:00 AM – 8:00 PM",
@@ -72,8 +80,8 @@ export const cafes: Cafe[] = [
   },
   {
     id: "cafe-4",
-    name: "Kedai Mesra Kampus",
-    location: "Kolej Mawar, Block A",
+    name: "Kedai Mesra Kolej Tuah",
+    location: "Kolej Tuah, Ground Floor",
     rating: 4.2,
     reviewCount: 97,
     openHours: "24 Hours",
@@ -85,8 +93,8 @@ export const cafes: Cafe[] = [
   },
   {
     id: "cafe-5",
-    name: "Sushi Corner",
-    location: "Fakulti Sains Komputer & Matematik",
+    name: "Sushi Corner KPP2",
+    location: "KPP2, Faculty Block",
     rating: 4.5,
     reviewCount: 156,
     openHours: "10:00 AM – 4:00 PM",
@@ -99,7 +107,7 @@ export const cafes: Cafe[] = [
 ];
 
 export const menuItems: MenuItem[] = [
-  // Kafe FSKM
+  // Kafe FHTM Lendu
   {
     id: "m-1",
     cafeId: "cafe-1",
@@ -187,7 +195,7 @@ export const menuItems: MenuItem[] = [
     image: images.menu["m-9"],
     category: "Drinks",
   },
-  // Bean & Brew
+  // Bean & Brew Lendu
   {
     id: "m-10",
     cafeId: "cafe-3",
@@ -228,7 +236,7 @@ export const menuItems: MenuItem[] = [
     category: "Pastries",
     vegetarian: true,
   },
-  // Kedai Mesra
+  // Kedai Mesra Kolej Tuah
   {
     id: "m-14",
     cafeId: "cafe-4",
@@ -256,7 +264,7 @@ export const menuItems: MenuItem[] = [
     image: images.menu["m-16"],
     category: "Snacks",
   },
-  // Sushi Corner
+  // Sushi Corner KPP2
   {
     id: "m-17",
     cafeId: "cafe-5",
@@ -282,7 +290,7 @@ export const rewards: Reward[] = [
   {
     id: "r-1",
     name: "Free Teh Tarik",
-    description: "Redeem at any campus cafe",
+    description: "Redeem at any Lendu campus outlet",
     pointsCost: 150,
     type: "drink",
     image: images.rewards["r-1"],
@@ -291,7 +299,7 @@ export const rewards: Reward[] = [
   {
     id: "r-2",
     name: "Free Latte",
-    description: "Valid at Bean & Brew only",
+    description: "Valid at Bean & Brew Lendu only",
     pointsCost: 300,
     type: "drink",
     image: images.rewards["r-2"],
@@ -318,7 +326,7 @@ export const rewards: Reward[] = [
   {
     id: "r-5",
     name: "Free Nasi Lemak",
-    description: "Warung Selera UiTM exclusive",
+    description: "Warung Selera Lendu exclusive",
     pointsCost: 500,
     type: "meal",
     image: images.rewards["r-5"],
@@ -327,7 +335,7 @@ export const rewards: Reward[] = [
   {
     id: "r-6",
     name: "10% Off Total Bill",
-    description: "One-time use, all cafes",
+    description: "One-time use, all Lendu outlets",
     pointsCost: 800,
     type: "discount",
     image: images.rewards["r-6"],
@@ -341,7 +349,7 @@ export const transactions: Transaction[] = [
     type: "payment",
     amount: -12.0,
     date: "2026-06-24T08:15:00",
-    description: "Kafe FSKM – Burger Daging Special",
+    description: "Kafe FHTM Lendu – Burger Daging Special",
     pointsEarned: 24,
   },
   {
@@ -372,7 +380,7 @@ export const transactions: Transaction[] = [
     type: "payment",
     amount: -9.0,
     date: "2026-06-22T10:20:00",
-    description: "Bean & Brew – Latte",
+    description: "Bean & Brew Lendu – Latte",
     pointsEarned: 18,
   },
   {
@@ -388,7 +396,7 @@ export const orders: Order[] = [
   {
     id: "ORD-2847",
     cafeId: "cafe-1",
-    cafeName: "Kafe FSKM",
+    cafeName: "Kafe FHTM Lendu",
     items: [
       { name: "Burger Daging Special", quantity: 1, price: 12.0 },
       { name: "Teh Tarik", quantity: 1, price: 2.5 },
@@ -399,12 +407,12 @@ export const orders: Order[] = [
     createdAt: "2026-06-24T11:45:00",
     isPreOrder: true,
     pointsEarned: 29,
-    qrCode: "KK-2847-FSKM",
+    qrCode: "KK-2847-FHTM",
   },
   {
     id: "ORD-2831",
     cafeId: "cafe-3",
-    cafeName: "Bean & Brew",
+    cafeName: "Bean & Brew Lendu",
     items: [{ name: "Latte", quantity: 1, price: 9.0 }],
     total: 9.0,
     status: "completed",
@@ -417,7 +425,7 @@ export const orders: Order[] = [
   {
     id: "ORD-2819",
     cafeId: "cafe-2",
-    cafeName: "Warung Selera UiTM",
+    cafeName: "Warung Selera Lendu",
     items: [
       { name: "Nasi Lemak Ayam Goreng", quantity: 1, price: 8.0 },
       { name: "Milo Ais", quantity: 1, price: 3.0 },
@@ -433,11 +441,16 @@ export const orders: Order[] = [
 ];
 
 export const preOrderSlots: PreOrderSlot[] = [
-  { id: "slot-1", label: "After 1st Period", time: "9:30 AM", available: true },
-  { id: "slot-2", label: "Lunch Break", time: "12:30 PM", available: true },
-  { id: "slot-3", label: "After 4th Period", time: "2:30 PM", available: true },
-  { id: "slot-4", label: "Before Last Class", time: "4:00 PM", available: false },
-  { id: "slot-5", label: "Evening", time: "6:00 PM", available: true },
+  { id: "h-9", time: "9:00 AM", available: true },
+  { id: "h-10", time: "10:00 AM", available: true },
+  { id: "h-11", time: "11:00 AM", available: true },
+  { id: "h-12", time: "12:00 PM", available: true },
+  { id: "h-13", time: "1:00 PM", available: true },
+  { id: "h-14", time: "2:00 PM", available: true },
+  { id: "h-15", time: "3:00 PM", available: true },
+  { id: "h-16", time: "4:00 PM", available: false },
+  { id: "h-17", time: "5:00 PM", available: true },
+  { id: "h-18", time: "6:00 PM", available: true },
 ];
 
 export const topUpOptions: TopUpOption[] = [
@@ -465,7 +478,7 @@ export const promoBanners = [
   {
     id: "p-2",
     title: "Pre-order & Skip the Queue",
-    subtitle: "Order before class ends, pick up on time",
+    subtitle: "Order before class ends, pick up at KPP",
     href: "/pre-order",
     image: images.promos["p-2"],
     color: "from-uitm-magenta/90 to-uitm-navy/90",
@@ -477,6 +490,27 @@ export const tierBenefits = {
   Silver: { multiplier: 1.5, nextTier: "Gold", pointsNeeded: 2000 },
   Gold: { multiplier: 2, nextTier: null, pointsNeeded: 0 },
 };
+
+export const tierDetails = [
+  {
+    tier: "Bronze" as const,
+    minPoints: 0,
+    multiplier: 1,
+    perks: ["2 points per RM1 spent", "Access to basic rewards"],
+  },
+  {
+    tier: "Silver" as const,
+    minPoints: 500,
+    multiplier: 1.5,
+    perks: ["1.5× points on every order", "Birthday free drink", "Promo early access"],
+  },
+  {
+    tier: "Gold" as const,
+    minPoints: 2000,
+    multiplier: 2,
+    perks: ["2× points on every order", "Priority pickup queue", "Exclusive Gold rewards"],
+  },
+];
 
 export function formatCurrency(amount: number): string {
   return `RM ${Math.abs(amount).toFixed(2)}`;

@@ -9,7 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useApp } from "@/context/app-context";
-import { formatCurrency, getCafeById } from "@/lib/data";
+import { formatCurrency, getCafeById, CAMPUS_NAME } from "@/lib/data";
 import { images } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +36,7 @@ export default function CartPage() {
           </div>
           <p className="mt-4 font-medium">Your cart is empty</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Browse campus cafes to add items
+            Browse {CAMPUS_NAME} outlets to add items
           </p>
           <Link href="/cafes" className={buttonVariants({ className: "mt-6" })}>
             Browse Cafes

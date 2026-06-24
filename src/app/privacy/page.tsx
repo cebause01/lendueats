@@ -18,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
+import { CAMPUS_NAME } from "@/lib/data";
 import { toast } from "sonner";
 
 export default function PrivacyPage() {
@@ -122,7 +123,7 @@ export default function PrivacyPage() {
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               KampusKafe encrypts your payment data and never shares your personal
               information with third parties without consent. Transaction history
-              is stored securely on UiTM campus servers.
+              is stored securely on {CAMPUS_NAME} campus servers.
             </p>
             <Button
               type="button"

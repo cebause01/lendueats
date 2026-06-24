@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { APP_NAME, DEMO_CREDENTIALS } from "@/lib/data";
+import { APP_NAME, CAMPUS_NAME, DEMO_CREDENTIALS } from "@/lib/data";
 import { brandAssets } from "@/lib/brand";
 import { useApp } from "@/context/app-context";
 import { toast } from "sonner";
@@ -61,7 +61,7 @@ export default function LoginPage() {
           </div>
           <h1 className="text-2xl font-bold text-uitm-navy">{APP_NAME}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            For UiTM students · Sign in to continue
+            For {CAMPUS_NAME} students · Sign in to continue
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
               Student Login
             </CardTitle>
             <CardDescription>
-              Use your UiTM student ID to access campus services
+              Use your UiTM student ID to access {CAMPUS_NAME} services
             </CardDescription>
           </CardHeader>
           <CardContent>

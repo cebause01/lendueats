@@ -8,7 +8,7 @@ import { CafeCard } from "@/components/cafe/cafe-card";
 import { AppImage } from "@/components/ui/app-image";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { cafes, preOrderSlots } from "@/lib/data";
+import { cafes, CAMPUS_NAME, preOrderSlots } from "@/lib/data";
 import { images } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ export default function PreOrderPage() {
     <MobileShell>
       <PageHeader
         title="Pre-order Food"
-        subtitle="Order before class ends"
+        subtitle={`Order ahead at ${CAMPUS_NAME}`}
         showBack
       />
 
@@ -31,7 +31,7 @@ export default function PreOrderPage() {
             <CardContent className="relative flex h-full flex-col justify-end p-4 text-white">
               <p className="font-semibold">Skip the lunch queue</p>
               <p className="mt-1 text-sm text-white/90">
-                Order during class, pick up when the bell rings.
+                Order during class at KPP, pick up at Dewan Bentara or your cafe.
               </p>
             </CardContent>
           </div>
@@ -40,23 +40,22 @@ export default function PreOrderPage() {
         <section className="mt-5">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
             <Clock className="size-4 text-primary" />
-            Available Pickup Slots
+            Pickup Hours
           </h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {preOrderSlots.map((slot) => (
               <Link
                 key={slot.id}
                 href={slot.available ? "/cafes" : "#"}
                 onClick={(e) => !slot.available && e.preventDefault()}
                 className={cn(
-                  "rounded-xl border p-3 text-center transition-colors",
+                  "rounded-xl border px-2 py-3 text-center transition-colors",
                   slot.available
                     ? "border-border bg-card hover:border-primary/40 active:scale-[0.98]"
                     : "cursor-not-allowed border-dashed opacity-50"
                 )}
               >
-                <p className="text-sm font-medium">{slot.label}</p>
-                <p className="text-xs text-muted-foreground">{slot.time}</p>
+                <p className="text-sm font-semibold">{slot.time}</p>
                 {!slot.available && (
                   <p className="mt-1 text-[10px] text-destructive">Full</p>
                 )}

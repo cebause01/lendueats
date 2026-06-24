@@ -124,7 +124,7 @@ export default function CafeDetailPage({
                 <TabsTrigger
                   key={cat}
                   value={cat}
-                  className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="rounded-full data-active:bg-primary data-active:text-primary-foreground"
                 >
                   {cat}
                 </TabsTrigger>

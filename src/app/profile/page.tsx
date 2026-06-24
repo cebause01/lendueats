@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useApp } from "@/context/app-context";
-import { formatCurrency } from "@/lib/data";
+import { formatCurrency, CAMPUS_NAME } from "@/lib/data";
 
 const UNREAD_NOTIFICATIONS = 2;
 
@@ -168,7 +168,7 @@ export default function ProfilePage() {
           onClick={() => router.push("/profile/about")}
           className="mt-6 w-full pb-2 text-center text-xs text-muted-foreground transition-colors hover:text-uitm-magenta"
         >
-          KampusKafe v1.0.0 · UiTM Shah Alam
+          KampusKafe v1.0.0 · {CAMPUS_NAME}, Melaka
         </button>
       </div>
     </MobileShell>
