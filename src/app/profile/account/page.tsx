@@ -86,7 +86,7 @@ export default function AccountPage() {
           <CardContent className="p-4">
             <p className="text-sm font-medium text-uitm-navy">Membership</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              {student.tier} tier · {student.points} Kampus Points
+              {student.tier} tier · {student.points} LenduEats Points
             </p>
             <Button
               type="button"

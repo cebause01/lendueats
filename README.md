@@ -1,15 +1,15 @@
-# KampusKafe 🍔
+# LenduEats 🍔
 
-A mobile-first Progressive Web App for **UiTM university students** — order food from campus cafes, collect loyalty points, top up your student wallet, scan QR to pay, redeem rewards, and pre-order meals before class ends.
+A mobile-first Progressive Web App for **UiTM Lendu students** — order food from campus cafes, collect loyalty points, top up your student wallet, scan QR to pay, redeem rewards, and pre-order meals before class ends.
 
 Built as a frontend prototype for HTT212 (Introduction to Digital Tourism), inspired by McDonald's loyalty/POS and PETRONAS Setel wallet models.
 
 ## Features
 
-- **Campus Cafe Ordering** — Browse 5 campus cafes with full menus
-- **Kampus Wallet** — Top up via FPX or Touch 'n Go (simulated)
+- **Campus Cafe Ordering** — Browse 8 campus premises with full menus
+- **LenduEats Wallet** — Top up via FPX or Touch 'n Go (simulated)
 - **QR Scan & Pay** — Contactless payment at campus merchants
-- **Kampus Rewards** — Earn points, redeem free drinks & discounts
+- **LenduEats Rewards** — Earn points, redeem free drinks & discounts
 - **Pre-order** — Schedule pickup before class ends
 - **PWA** — Installable on mobile home screen
 

@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useApp } from "@/context/app-context";
-import { formatCurrency, CAMPUS_NAME } from "@/lib/data";
+import { formatCurrency, CAMPUS_NAME, APP_NAME } from "@/lib/data";
 
 const UNREAD_NOTIFICATIONS = 2;
 
@@ -104,7 +104,7 @@ export default function ProfilePage() {
             <Separator />
             <ProfileMenuRow
               href="/wallet"
-              label="Kampus Wallet"
+              label="LenduEats Wallet"
               icon={Wallet}
               description="Top up & transactions"
             />
@@ -113,7 +113,7 @@ export default function ProfilePage() {
               href="/rewards"
               label="Rewards"
               icon={Gift}
-              description="Redeem Kampus Points"
+              description="Redeem LenduEats Points"
             />
             <Separator />
             <ProfileMenuRow
@@ -147,7 +147,7 @@ export default function ProfilePage() {
             <Separator />
             <ProfileMenuRow
               href="/profile/about"
-              label="About KampusKafe"
+              label={`About ${APP_NAME}`}
               icon={Info}
               description="Version & app info"
             />
@@ -168,7 +168,7 @@ export default function ProfilePage() {
           onClick={() => router.push("/profile/about")}
           className="mt-6 w-full pb-2 text-center text-xs text-muted-foreground transition-colors hover:text-uitm-magenta"
         >
-          KampusKafe v1.0.0 · {CAMPUS_NAME}, Melaka
+          {APP_NAME} v1.0.0 · {CAMPUS_NAME}, Melaka
         </button>
       </div>
     </MobileShell>

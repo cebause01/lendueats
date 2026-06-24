@@ -24,7 +24,7 @@ const notifications = [
   {
     id: "n-2",
     title: "Double Points Week",
-    body: "Earn 2× Kampus Points on all orders this week. Don't miss out!",
+    body: "Earn 2× LenduEats Points on all orders this week. Don't miss out!",
     time: "2 hours ago",
     unread: true,
     href: "/rewards",
@@ -33,7 +33,7 @@ const notifications = [
   {
     id: "n-3",
     title: "Wallet Top-up Successful",
-    body: "RM 50.00 has been added to your Kampus Wallet via FPX.",
+    body: "RM 50.00 has been added to your LenduEats Wallet via FPX.",
     time: "Yesterday",
     unread: false,
     href: "/wallet",

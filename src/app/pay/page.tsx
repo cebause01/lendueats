@@ -70,7 +70,7 @@ export default function PayPage() {
       const merchant = merchants.find((m) => m.id === merchantId);
 
       if (!merchant) {
-        toast.error("Invalid QR code. Scan a KampusKafe merchant code.");
+        toast.error("Invalid QR code. Scan a LenduEats merchant code.");
         return;
       }
 
@@ -112,7 +112,7 @@ export default function PayPage() {
 
   return (
     <MobileShell>
-      <PageHeader title="Scan & Pay" subtitle="Pay with your Kampus Wallet" />
+      <PageHeader title="Scan & Pay" subtitle="Pay with your LenduEats Wallet" />
 
       <div className="px-4 pb-4">
         <Card className="border-border/60 bg-uitm-navy-tint">

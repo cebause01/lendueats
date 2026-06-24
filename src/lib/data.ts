@@ -18,7 +18,7 @@ export const CAMPUS_SUPPORT_PHONE = "+6065582000";
 export const CAMPUS_SUPPORT_PHONE_DISPLAY = "(+606) 558 2000";
 export const CAMPUS_SUPPORT_EMAIL = "pnc.inqka@uitm.edu.my";
 
-export const APP_NAME = "KampusKafe";
+export const APP_NAME = "LenduEats";
 export const APP_TAGLINE = `Campus Food & Convenience · ${CAMPUS_NAME}`;
 
 export const DEMO_CREDENTIALS = {
@@ -731,7 +731,7 @@ export const topUpOptions: TopUpOption[] = [
 ];
 
 export const paymentMethods = [
-  { id: "wallet", name: "Kampus Wallet", icon: "wallet" as const },
+  { id: "wallet", name: "LenduEats Wallet", icon: "wallet" as const },
   { id: "fpx", name: "Online Banking (FPX)", icon: "bank" as const },
   { id: "tng", name: "Touch 'n Go eWallet", icon: "smartphone" as const },
 ];
@@ -740,7 +740,7 @@ export const promoBanners = [
   {
     id: "p-1",
     title: "Double Points Week!",
-    subtitle: "Earn 2× Kampus Points on all orders",
+    subtitle: "Earn 2× LenduEats Points on all orders",
     href: "/rewards",
     image: images.promos["p-1"],
     color: "from-uitm-navy/90 to-uitm-magenta/90",

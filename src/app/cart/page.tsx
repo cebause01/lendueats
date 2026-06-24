@@ -123,7 +123,7 @@ export default function CartPage() {
               <span className="text-primary">{formatCurrency(total)}</span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Earn {Math.floor(total * 2)} Kampus Points on this order
+              Earn {Math.floor(total * 2)} LenduEats Points on this order
             </p>
           </CardContent>
         </Card>

@@ -47,7 +47,7 @@ export default function WalletPage() {
 
   return (
     <MobileShell>
-      <PageHeader title="Kampus Wallet" subtitle="Top up & manage balance" showBack />
+      <PageHeader title="LenduEats Wallet" subtitle="Top up & manage balance" showBack />
 
       <div className="px-4">
         <Card className="overflow-hidden border-0 bg-uitm-brand text-white shadow-lg shadow-uitm-navy/15">

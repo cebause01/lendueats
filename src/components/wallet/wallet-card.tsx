@@ -21,7 +21,7 @@ export function WalletCard() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-wider text-white/70">
-              Kampus Wallet
+              LenduEats Wallet
             </p>
             <p className="mt-1 text-[28px] font-semibold leading-none tracking-tight">
               {formatCurrency(student.walletBalance)}

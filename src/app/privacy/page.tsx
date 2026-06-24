@@ -121,7 +121,7 @@ export default function PrivacyPage() {
               <p className="font-medium">Your data is protected</p>
             </div>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              KampusKafe encrypts your payment data and never shares your personal
+              LenduEats encrypts your payment data and never shares your personal
               information with third parties without consent. Transaction history
               is stored securely on {CAMPUS_NAME} campus servers.
             </p>

@@ -25,7 +25,7 @@ export default function RewardsPage() {
 
   return (
     <MobileShell>
-      <PageHeader title="Kampus Rewards" subtitle="Earn & redeem points" />
+      <PageHeader title="LenduEats Rewards" subtitle="Earn & redeem points" />
 
       <div className="px-4">
         <Card

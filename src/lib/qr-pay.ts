@@ -1,4 +1,4 @@
-const MERCHANT_QR_PREFIX = "kampuspay:";
+const MERCHANT_QR_PREFIX = "lendueats:";
 
 export function merchantQrPayload(merchantId: string): string {
   return `${MERCHANT_QR_PREFIX}${merchantId}`;

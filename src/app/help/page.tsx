@@ -36,7 +36,7 @@ const faqs = [
     linkLabel: "Pre-order now",
   },
   {
-    q: "How do Kampus Points work?",
+    q: "How do LenduEats Points work?",
     a: "Earn 2 points per RM 1 spent. Redeem points for free drinks, meals, and discounts.",
     href: "/rewards",
     linkLabel: "View rewards",
