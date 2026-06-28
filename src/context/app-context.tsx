@@ -39,6 +39,8 @@ interface AppContextValue {
   transactions: Transaction[];
   redeemedRewards: string[];
   activeDiscount: { id: string; amount: number } | null;
+  fulfillmentMode: FulfillmentType;
+  setFulfillmentMode: (mode: FulfillmentType) => void;
   setActiveCafeId: (id: string | null) => void;
   addToCart: (item: CartItem) => void;
   updateCartQuantity: (menuItemId: string, quantity: number) => void;
@@ -73,6 +75,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     id: string;
     amount: number;
   } | null>(null);
+  const [fulfillmentMode, setFulfillmentMode] =
+    useState<FulfillmentType>("pickup");
 
   const login = useCallback((studentId: string, password: string) => {
     if (studentId === "2025893182" && password === "kampus123") {
@@ -362,6 +366,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       transactions,
       redeemedRewards,
       activeDiscount,
+      fulfillmentMode,
+      setFulfillmentMode,
       setActiveCafeId,
       addToCart,
       updateCartQuantity,
@@ -386,6 +392,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       transactions,
       redeemedRewards,
       activeDiscount,
+      fulfillmentMode,
       addToCart,
       updateCartQuantity,
       removeFromCart,

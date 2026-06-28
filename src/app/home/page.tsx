@@ -1,25 +1,28 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-  ShoppingBag,
-  UtensilsCrossed,
-  Clock,
-  Wallet,
-  Gift,
-  Bike,
-} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Bell, ShoppingBag, UtensilsCrossed, Bike } from "lucide-react";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { SectionHeader } from "@/components/layout/section-header";
-import { WalletCard } from "@/components/wallet/wallet-card";
+import { FulfillmentPicker } from "@/components/home/fulfillment-picker";
+import { HomeStatsRow } from "@/components/home/stats-row";
+import { PromoCarousel } from "@/components/home/promo-carousel";
 import { CafeCard } from "@/components/cafe/cafe-card";
 import { AppImage } from "@/components/ui/app-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useApp } from "@/context/app-context";
-import { cafes, CAMPUS_NAME, promoBanners, orders as seedOrders } from "@/lib/data";
+import {
+  APP_NAME,
+  cafes,
+  CAMPUS_NAME,
+  promoBanners,
+  orders as seedOrders,
+} from "@/lib/data";
+import { brandAssets } from "@/lib/brand";
 import {
   formatEta,
   getActiveDeliveryStage,
@@ -27,13 +30,6 @@ import {
   isActiveOrder,
 } from "@/lib/delivery";
 import { cn } from "@/lib/utils";
-
-const quickActions = [
-  { href: "/cafes", label: "Order", icon: UtensilsCrossed },
-  { href: "/pre-order", label: "Pre-order", icon: Clock },
-  { href: "/wallet", label: "Top Up", icon: Wallet },
-  { href: "/rewards", label: "Rewards", icon: Gift },
-];
 
 const statusStyles: Record<string, string> = {
   confirmed: "bg-blue-50 text-blue-700 border-blue-200",
@@ -46,7 +42,14 @@ const statusStyles: Record<string, string> = {
 };
 
 export default function HomePage() {
-  const { student, orders, cartItemCount } = useApp();
+  const router = useRouter();
+  const {
+    student,
+    orders,
+    cartItemCount,
+    fulfillmentMode,
+    setFulfillmentMode,
+  } = useApp();
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -59,104 +62,92 @@ export default function HomePage() {
   );
   const openCafes = cafes.filter((c) => c.isOpen).slice(0, 3);
 
+  const handleFulfillmentSelect = (mode: typeof fulfillmentMode) => {
+    setFulfillmentMode(mode);
+    router.push("/cafes");
+  };
+
   return (
     <MobileShell>
-      <div className="px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-6">
-        <header className="flex items-center justify-between">
-          <div>
-            <p className="text-xs text-muted-foreground">{CAMPUS_NAME} · Welcome back</p>
-            <h1 className="text-xl font-semibold tracking-tight">
-              {student.name.split(" ")[0]}
-            </h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link href="/cart" aria-label="Open cart">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative size-10 rounded-full"
-              >
-                <ShoppingBag className="size-5 text-foreground/80" />
-                {cartItemCount > 0 && (
-                  <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-uitm-magenta text-[10px] font-bold text-white">
-                    {cartItemCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
-            <Link href="/profile" aria-label="Open profile">
-              <Avatar className="size-10">
-                <AvatarFallback className="bg-uitm-magenta/10 text-sm font-semibold text-uitm-magenta">
-                  {student.avatar}
-                </AvatarFallback>
-              </Avatar>
-            </Link>
-          </div>
-        </header>
-
-        <div className="mt-5">
-          <WalletCard />
-        </div>
-
-        <div className="mt-5 flex gap-2.5 overflow-x-auto pb-0.5 scrollbar-none">
-          {promoBanners.map((banner) => (
-            <Link
-              key={banner.id}
-              href={banner.href}
-              className="relative min-w-[240px] shrink-0 overflow-hidden rounded-2xl active:opacity-90"
-            >
-              <div className="relative h-24">
-                <AppImage src={banner.image} alt={banner.title} fill />
-                <div
-                  className={cn(
-                    "absolute inset-0 bg-gradient-to-r opacity-85",
-                    banner.color
-                  )}
-                />
-                <div className="absolute inset-0 flex flex-col justify-end p-3.5 text-white">
-                  <p className="text-sm font-semibold leading-tight">
-                    {banner.title}
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-white/85">
-                    {banner.subtitle}
-                  </p>
-                </div>
+      <div className="bg-uitm-brand-subtle pb-6">
+        {/* Header */}
+        <div className="px-4 pt-[max(0.75rem,env(safe-area-inset-top))]">
+          <header className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Image
+                src={brandAssets.appLogo}
+                alt={APP_NAME}
+                width={40}
+                height={40}
+                className="size-10 object-contain"
+              />
+              <div>
+                <p className="text-[11px] font-medium text-muted-foreground">
+                  {CAMPUS_NAME}
+                </p>
+                <h1 className="text-lg font-bold tracking-tight text-uitm-navy">
+                  Hi, {student.name.split(" ")[0]} 👋
+                </h1>
               </div>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-5 grid grid-cols-4 gap-2">
-          {quickActions.map((action) => {
-            const Icon = action.icon;
-            return (
-              <Link
-                key={action.href}
-                href={action.href}
-                className="flex flex-col items-center gap-1.5 rounded-2xl py-2.5 transition-colors active:bg-muted/50"
-              >
-                <div className="flex size-11 items-center justify-center rounded-2xl bg-muted/60 text-uitm-magenta">
-                  <Icon className="size-[18px]" strokeWidth={1.75} />
-                </div>
-                <span className="text-[10px] font-medium text-muted-foreground">
-                  {action.label}
-                </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Link href="/notifications" aria-label="Notifications">
+                <Button variant="ghost" size="icon" className="size-10 rounded-full">
+                  <Bell className="size-5 text-foreground/70" />
+                </Button>
               </Link>
-            );
-          })}
+              <Link href="/cart" aria-label="Open cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative size-10 rounded-full"
+                >
+                  <ShoppingBag className="size-5 text-foreground/80" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-uitm-magenta text-[10px] font-bold text-white">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            </div>
+          </header>
+
+          <div className="mt-5">
+            <HomeStatsRow />
+          </div>
         </div>
 
+        {/* Promo */}
+        <div className="mt-5 px-4">
+          <PromoCarousel banners={promoBanners} />
+        </div>
+
+        {/* Delivery / Pickup hero */}
+        <div className="mt-8 px-4">
+          <FulfillmentPicker
+            value={fulfillmentMode}
+            onChange={handleFulfillmentSelect}
+            variant="hero"
+          />
+        </div>
+
+        {/* Active order */}
         {activeOrders.length > 0 && (
-          <section className="mt-7">
-            <SectionHeader title="Active Orders" href="/orders" linkLabel="View all" />
+          <section className="mt-8 px-4">
+            <SectionHeader title="Active Order" href="/orders" linkLabel="View all" />
             {activeOrders.slice(0, 1).map((order) => {
               const cafe = cafes.find((c) => c.id === order.cafeId);
               const activeStage = getActiveDeliveryStage(order);
               const eta = getEtaMinutesRemaining(order, now);
               return (
-                <Link key={order.id} href={`/orders/${order.id}`} className="block">
-                  <div className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card px-3 py-3 transition-colors active:bg-muted/30">
-                    <div className="relative size-12 shrink-0 overflow-hidden rounded-full ring-1 ring-border/50">
+                <Link
+                  key={order.id}
+                  href={`/orders/${order.id}`}
+                  className="block overflow-hidden rounded-2xl border border-border/40 bg-card shadow-sm transition-all active:scale-[0.99] hover:shadow-md"
+                >
+                  <div className="flex items-center gap-3 px-4 py-3.5">
+                    <div className="relative size-12 shrink-0 overflow-hidden rounded-full ring-2 ring-white shadow-sm">
                       {cafe ? (
                         <AppImage src={cafe.image} alt={order.cafeName} fill />
                       ) : (
@@ -171,8 +162,7 @@ export default function HomePage() {
                         {order.fulfillmentType === "delivery" ? (
                           <>
                             <Bike className="size-3" />
-                            {order.deliveryLocation?.label ?? "Delivery"} · ETA{" "}
-                            {formatEta(eta)}
+                            {order.deliveryLocation?.label} · ETA {formatEta(eta)}
                           </>
                         ) : (
                           <>Pickup at {order.pickupTime}</>
@@ -190,15 +180,19 @@ export default function HomePage() {
                       {String(activeStage).replace(/_/g, " ")}
                     </Badge>
                   </div>
+                  <div className="bg-uitm-navy/5 px-4 py-2 text-center text-xs font-medium text-uitm-navy">
+                    Tap to track live →
+                  </div>
                 </Link>
               );
             })}
           </section>
         )}
 
-        <section className="mt-7">
-          <SectionHeader title="Campus Cafes" href="/cafes" />
-          <div className="space-y-2">
+        {/* Popular cafes */}
+        <section className="mt-8 px-4">
+          <SectionHeader title="Popular on Campus" href="/cafes" />
+          <div className="space-y-2.5">
             {openCafes.map((cafe) => (
               <CafeCard key={cafe.id} cafe={cafe} compact />
             ))}

@@ -15,7 +15,7 @@ export function CafeCard({ cafe, compact }: CafeCardProps) {
     return (
       <Link
         href={`/cafes/${cafe.id}`}
-        className="group flex items-center gap-3 rounded-2xl border border-border/40 bg-card px-3 py-3 transition-colors hover:border-border active:bg-muted/30"
+        className="group flex items-center gap-3.5 rounded-2xl border border-border/40 bg-card px-3.5 py-3.5 shadow-sm transition-all hover:border-border hover:shadow-md active:scale-[0.99]"
       >
         <div className="relative size-14 shrink-0 overflow-hidden rounded-full ring-1 ring-border/50">
           <AppImage src={cafe.image} alt={cafe.name} fill />
@@ -51,7 +51,7 @@ export function CafeCard({ cafe, compact }: CafeCardProps) {
     <Link href={`/cafes/${cafe.id}`} className="block">
       <article
         className={cn(
-          "overflow-hidden rounded-2xl border border-border/40 bg-card transition-colors hover:border-border",
+          "overflow-hidden rounded-2xl border border-border/40 bg-card shadow-sm transition-all hover:shadow-md",
           !cafe.isOpen && "opacity-70"
         )}
       >

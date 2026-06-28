@@ -24,8 +24,8 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t border-border/60 bg-background/95 backdrop-blur-lg pb-[env(safe-area-inset-bottom)]">
-      <div className="flex items-end justify-around px-2 pt-2 pb-2">
+    <nav className="fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t border-border/50 bg-background/98 backdrop-blur-xl pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,30,153,0.06)]">
+      <div className="flex items-end justify-around px-3 pt-2.5 pb-2">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -40,7 +40,7 @@ export function BottomNav() {
               >
                 <div
                   className={cn(
-                    "flex size-14 items-center justify-center rounded-2xl bg-uitm-brand text-white shadow-lg shadow-uitm-navy/25 transition-transform active:scale-95",
+                    "flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-uitm-navy to-uitm-magenta text-white shadow-lg shadow-uitm-navy/30 transition-transform active:scale-95",
                   )}
                 >
                   <Icon className="size-6" />

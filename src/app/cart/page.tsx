@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Home, Minus, Plus, Trash2 } from "lucide-react";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { AppImage } from "@/components/ui/app-image";
@@ -12,19 +13,30 @@ import { useApp } from "@/context/app-context";
 import { formatCurrency, getCafeById, CAMPUS_NAME } from "@/lib/data";
 import { images } from "@/lib/images";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function CartPage() {
+  const router = useRouter();
   const {
     cart,
     cartTotal,
     updateCartQuantity,
     removeFromCart,
+    clearCart,
     activeCafeId,
     activeDiscount,
   } = useApp();
   const cafe = activeCafeId ? getCafeById(activeCafeId) : null;
   const discount = activeDiscount?.amount ?? 0;
   const total = Math.max(0, cartTotal - discount);
+
+  const handleClearCart = () => {
+    if (window.confirm("Clear your cart and go back to home?")) {
+      clearCart();
+      toast.info("Cart cleared");
+      router.push("/home");
+    }
+  };
 
   if (cart.length === 0) {
     return (
@@ -41,15 +53,36 @@ export default function CartPage() {
           <Link href="/cafes" className={buttonVariants({ className: "mt-6" })}>
             Browse Cafes
           </Link>
+          <Link
+            href="/home"
+            className={buttonVariants({ variant: "outline", className: "mt-3" })}
+          >
+            Back to Home
+          </Link>
         </div>
       </MobileShell>
     );
   }
 
   return (
-    <MobileShell showNav={false}>
-      <PageHeader title="Your Cart" showBack />
-      <div className="px-4 pb-32">
+    <MobileShell>
+      <PageHeader
+        title="Your Cart"
+        showBack
+        backHref="/cafes"
+        rightAction={
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5 text-muted-foreground"
+            onClick={() => router.push("/home")}
+          >
+            <Home className="size-4" />
+            Home
+          </Button>
+        }
+      />
+      <div className="px-4 pb-44">
         {cafe && (
           <p className="mb-4 text-sm text-muted-foreground">
             Ordering from{" "}
@@ -129,13 +162,20 @@ export default function CartPage() {
         </Card>
       </div>
 
-      <div className="fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t bg-background/95 p-4 backdrop-blur-lg pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-[4.75rem] left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t bg-background/95 p-4 backdrop-blur-lg">
         <Link
           href="/checkout"
           className={cn(buttonVariants(), "h-12 w-full text-base")}
         >
           Proceed to Checkout
         </Link>
+        <Button
+          variant="ghost"
+          className="mt-2 h-10 w-full text-destructive hover:bg-destructive/5 hover:text-destructive"
+          onClick={handleClearCart}
+        >
+          Cancel order & go home
+        </Button>
       </div>
     </MobileShell>
   );

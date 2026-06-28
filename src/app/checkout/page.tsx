@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Bike,
   CheckCircle2,
   Clock,
   CreditCard,
+  Home,
   MapPin,
-  ShoppingBag,
 } from "lucide-react";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { PageHeader } from "@/components/layout/page-header";
+import { FulfillmentPicker } from "@/components/home/fulfillment-picker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -32,6 +32,7 @@ import {
 } from "@/lib/delivery";
 import type { FulfillmentType } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -42,10 +43,13 @@ export default function CheckoutPage() {
     activeDiscount,
     student,
     placeOrder,
+    fulfillmentMode,
+    setFulfillmentMode,
+    clearCart,
   } = useApp();
   const cafe = activeCafeId ? getCafeById(activeCafeId) : null;
   const [fulfillmentType, setFulfillmentType] =
-    useState<FulfillmentType>("pickup");
+    useState<FulfillmentType>(fulfillmentMode);
   const [isPreOrder, setIsPreOrder] = useState(false);
   const [pickupSlot, setPickupSlot] = useState(preOrderSlots[4].id);
   const [deliveryLocationId, setDeliveryLocationId] = useState(
@@ -61,6 +65,14 @@ export default function CheckoutPage() {
     }
   }, [cart.length, success, router]);
 
+  useEffect(() => {
+    setFulfillmentType(fulfillmentMode);
+  }, [fulfillmentMode]);
+
+  useEffect(() => {
+    setFulfillmentMode(fulfillmentType);
+  }, [fulfillmentType, setFulfillmentMode]);
+
   const discount = activeDiscount?.amount ?? 0;
   const deliveryFee = fulfillmentType === "delivery" ? DELIVERY_FEE : 0;
   const total = Math.max(0, cartTotal + deliveryFee - discount);
@@ -69,6 +81,18 @@ export default function CheckoutPage() {
     fulfillmentType === "delivery"
       ? estimateDeliveryMinutes(deliveryLocationId)
       : null;
+
+  const handleCancelOrder = () => {
+    if (
+      window.confirm(
+        "Cancel this order and clear your cart? You can start a new order anytime."
+      )
+    ) {
+      clearCart();
+      toast.info("Order cancelled");
+      router.push("/home");
+    }
+  };
 
   const handlePlaceOrder = () => {
     const order = placeOrder({
@@ -90,7 +114,7 @@ export default function CheckoutPage() {
 
   if (cart.length === 0 && !success) {
     return (
-      <MobileShell showNav={false}>
+      <MobileShell>
         <PageHeader title="Checkout" showBack backHref="/cart" />
         <p className="p-8 text-center text-muted-foreground">Redirecting...</p>
       </MobileShell>
@@ -99,7 +123,7 @@ export default function CheckoutPage() {
 
   if (success) {
     return (
-      <MobileShell showNav={false}>
+      <MobileShell>
         <div className="flex min-h-[70dvh] flex-col items-center justify-center px-6 text-center">
           <div className="flex size-20 items-center justify-center rounded-full bg-green-100 text-green-600">
             <CheckCircle2 className="size-10" />
@@ -142,53 +166,37 @@ export default function CheckoutPage() {
   }
 
   return (
-    <MobileShell showNav={false}>
-      <PageHeader title="Checkout" showBack backHref="/cart" />
-      <div className="space-y-5 px-4 pb-32">
-        <section>
-          <Label className="text-sm font-medium">How would you like it?</Label>
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            {[
-              {
-                value: "pickup" as const,
-                label: "Pickup",
-                icon: ShoppingBag,
-                desc: "Collect at cafe",
-              },
-              {
-                value: "delivery" as const,
-                label: "Delivery",
-                icon: Bike,
-                desc: `+${formatCurrency(DELIVERY_FEE)} fee`,
-              },
-            ].map((opt) => {
-              const Icon = opt.icon;
-              return (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setFulfillmentType(opt.value)}
-                  className={cn(
-                    "flex flex-col items-start gap-1 rounded-xl border-2 p-4 text-left transition-colors",
-                    fulfillmentType === opt.value
-                      ? "border-primary bg-primary/5"
-                      : "border-border"
-                  )}
-                >
-                  <Icon className="size-5 text-uitm-magenta" />
-                  <span className="text-sm font-medium">{opt.label}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {opt.desc}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+    <MobileShell>
+      <PageHeader
+        title="Checkout"
+        showBack
+        backHref="/cart"
+        rightAction={
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5 text-muted-foreground"
+            onClick={() => router.push("/home")}
+          >
+            <Home className="size-4" />
+            Home
+          </Button>
+        }
+      />
+      <div className="space-y-6 px-4 pb-44">
+        <section className="rounded-3xl border border-border/50 bg-card p-5 shadow-sm">
+          <FulfillmentPicker
+            value={fulfillmentType}
+            onChange={setFulfillmentType}
+            variant="compact"
+          />
         </section>
 
         {fulfillmentType === "pickup" && (
-          <section>
-            <Label className="text-sm font-medium">Pickup Option</Label>
+          <section className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm">
+            <Label className="text-sm font-semibold text-uitm-navy">
+              Pickup Option
+            </Label>
             <div className="mt-2 grid grid-cols-2 gap-2">
               {[
                 { value: false, label: "Order Now", icon: "⚡" },
@@ -214,8 +222,8 @@ export default function CheckoutPage() {
         )}
 
         {fulfillmentType === "pickup" && isPreOrder && (
-          <section>
-            <Label className="flex items-center gap-2 text-sm font-medium">
+          <section className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm">
+            <Label className="flex items-center gap-2 text-sm font-semibold text-uitm-navy">
               <Clock className="size-4" />
               Pickup Time
             </Label>
@@ -246,8 +254,8 @@ export default function CheckoutPage() {
         )}
 
         {fulfillmentType === "delivery" && (
-          <section>
-            <Label className="flex items-center gap-2 text-sm font-medium">
+          <section className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm">
+            <Label className="flex items-center gap-2 text-sm font-semibold text-uitm-navy">
               <MapPin className="size-4" />
               Deliver To
             </Label>
@@ -283,8 +291,8 @@ export default function CheckoutPage() {
           </section>
         )}
 
-        <section>
-          <Label className="flex items-center gap-2 text-sm font-medium">
+        <section className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm">
+          <Label className="flex items-center gap-2 text-sm font-semibold text-uitm-navy">
             <CreditCard className="size-4" />
             Payment Method
           </Label>
@@ -315,7 +323,7 @@ export default function CheckoutPage() {
           </div>
         </section>
 
-        <Card>
+        <Card className="border-border/50 shadow-sm">
           <CardContent className="space-y-2 p-4">
             <p className="font-medium">{cafe?.name}</p>
             {cart.map((item) => (
@@ -352,11 +360,27 @@ export default function CheckoutPage() {
         </Card>
       </div>
 
-      <div className="fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t bg-background p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-[4.75rem] left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t bg-background/95 p-4 backdrop-blur-lg">
         <Button className="h-12 w-full text-base" onClick={handlePlaceOrder}>
           {fulfillmentType === "delivery" ? "Place Delivery Order" : "Place Order"}{" "}
           · {formatCurrency(total)}
         </Button>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <Button
+            variant="outline"
+            className="h-10"
+            onClick={() => router.push("/cart")}
+          >
+            Edit cart
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-10 text-destructive hover:bg-destructive/5 hover:text-destructive"
+            onClick={handleCancelOrder}
+          >
+            Cancel order
+          </Button>
+        </div>
       </div>
     </MobileShell>
   );

@@ -75,12 +75,12 @@
   --primary-foreground: #ffffff;
   --secondary: #e8edf8;
   --secondary-foreground: #001e99;
-  --muted: #f5f6f8;
-  --muted-foreground: #6b6b6b;
+  --muted: #f7f8fb;
+  --muted-foreground: #64748b;
   --accent: #fff8e6;
   --accent-foreground: #001e99;
   --destructive: #dc2626;
-  --border: #e2e6ef;
+  --border: #e8ecf4;
   --input: #e2e6ef;
   --ring: #a50064;
   --chart-1: #001e99;
@@ -147,9 +147,9 @@
   .bg-uitm-brand-subtle {
     background: linear-gradient(
       180deg,
-      var(--uitm-navy-tint) 0%,
-      #ffffff 45%,
-      var(--uitm-magenta-tint) 100%
+      #f0f4fc 0%,
+      #ffffff 35%,
+      #fafbfd 100%
     );
   }
   .text-uitm-navy {
