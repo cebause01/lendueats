@@ -1,4 +1,42 @@
-export type OrderStatus = "preparing" | "ready" | "completed" | "cancelled";
+export type OrderStatus =
+  | "preparing"
+  | "ready"
+  | "completed"
+  | "cancelled"
+  | "confirmed"
+  | "rider_assigned"
+  | "picked_up"
+  | "on_the_way"
+  | "nearby"
+  | "delivered";
+
+export type FulfillmentType = "pickup" | "delivery";
+
+export type DeliveryStage =
+  | "confirmed"
+  | "preparing"
+  | "ready"
+  | "rider_assigned"
+  | "picked_up"
+  | "on_the_way"
+  | "nearby"
+  | "delivered";
+
+export interface DeliveryLocation {
+  id: string;
+  label: string;
+  detail: string;
+  zone: string;
+}
+
+export interface TrackingStep {
+  stage: DeliveryStage | OrderStatus;
+  label: string;
+  description: string;
+  timestamp?: string;
+  completed: boolean;
+  active: boolean;
+}
 
 export interface Student {
   id: string;
@@ -75,6 +113,12 @@ export interface Order {
   isPreOrder: boolean;
   pointsEarned: number;
   qrCode: string;
+  fulfillmentType: FulfillmentType;
+  deliveryLocation?: DeliveryLocation;
+  deliveryFee?: number;
+  estimatedDeliveryAt?: string;
+  driverName?: string;
+  driverPhone?: string;
 }
 
 export interface PreOrderSlot {

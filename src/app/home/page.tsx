@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   ShoppingBag,
   UtensilsCrossed,
   Clock,
   Wallet,
   Gift,
+  Bike,
 } from "lucide-react";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { SectionHeader } from "@/components/layout/section-header";
@@ -18,6 +20,12 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useApp } from "@/context/app-context";
 import { cafes, CAMPUS_NAME, promoBanners, orders as seedOrders } from "@/lib/data";
+import {
+  formatEta,
+  getActiveDeliveryStage,
+  getEtaMinutesRemaining,
+  isActiveOrder,
+} from "@/lib/delivery";
 import { cn } from "@/lib/utils";
 
 const quickActions = [
@@ -28,14 +36,26 @@ const quickActions = [
 ];
 
 const statusStyles: Record<string, string> = {
+  confirmed: "bg-blue-50 text-blue-700 border-blue-200",
   preparing: "bg-uitm-navy/8 text-uitm-navy border-uitm-navy/15",
   ready: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  rider_assigned: "bg-purple-50 text-purple-700 border-purple-200",
+  picked_up: "bg-indigo-50 text-indigo-700 border-indigo-200",
+  on_the_way: "bg-uitm-navy/8 text-uitm-navy border-uitm-navy/15",
+  nearby: "bg-uitm-magenta/10 text-uitm-magenta border-uitm-magenta/20",
 };
 
 export default function HomePage() {
   const { student, orders, cartItemCount } = useApp();
-  const activeOrders = [...orders, ...seedOrders].filter(
-    (o) => o.status === "preparing" || o.status === "ready"
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const activeOrders = [...orders, ...seedOrders].filter((o) =>
+    isActiveOrder(o, now)
   );
   const openCafes = cafes.filter((c) => c.isOpen).slice(0, 3);
 
@@ -131,8 +151,10 @@ export default function HomePage() {
             <SectionHeader title="Active Orders" href="/orders" linkLabel="View all" />
             {activeOrders.slice(0, 1).map((order) => {
               const cafe = cafes.find((c) => c.id === order.cafeId);
+              const activeStage = getActiveDeliveryStage(order);
+              const eta = getEtaMinutesRemaining(order, now);
               return (
-                <Link key={order.id} href="/orders" className="block">
+                <Link key={order.id} href={`/orders/${order.id}`} className="block">
                   <div className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card px-3 py-3 transition-colors active:bg-muted/30">
                     <div className="relative size-12 shrink-0 overflow-hidden rounded-full ring-1 ring-border/50">
                       {cafe ? (
@@ -145,18 +167,27 @@ export default function HomePage() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-semibold">{order.cafeName}</p>
-                      <p className="text-xs text-muted-foreground">
-                        Pickup at {order.pickupTime}
+                      <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                        {order.fulfillmentType === "delivery" ? (
+                          <>
+                            <Bike className="size-3" />
+                            {order.deliveryLocation?.label ?? "Delivery"} · ETA{" "}
+                            {formatEta(eta)}
+                          </>
+                        ) : (
+                          <>Pickup at {order.pickupTime}</>
+                        )}
                       </p>
                     </div>
                     <Badge
                       variant="outline"
                       className={cn(
                         "shrink-0 border capitalize",
-                        statusStyles[order.status] ?? "bg-muted text-muted-foreground"
+                        statusStyles[String(activeStage)] ??
+                          "bg-muted text-muted-foreground"
                       )}
                     >
-                      {order.status}
+                      {String(activeStage).replace(/_/g, " ")}
                     </Badge>
                   </div>
                 </Link>

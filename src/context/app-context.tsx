@@ -4,13 +4,29 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
 import { toast } from "sonner";
 import { student as initialStudent, getCafeById } from "@/lib/data";
-import type { CartItem, Order, Reward, Student, Transaction } from "@/lib/types";
+import {
+  DELIVERY_FEE,
+  computeEstimatedDeliveryAt,
+  deliveryStageToStatus,
+  getDeliveryLocation,
+  getDriverForOrder,
+  getSimulatedDeliveryStage,
+} from "@/lib/delivery";
+import type {
+  CartItem,
+  FulfillmentType,
+  Order,
+  Reward,
+  Student,
+  Transaction,
+} from "@/lib/types";
 
 interface AppContextValue {
   isAuthenticated: boolean;
@@ -35,7 +51,10 @@ interface AppContextValue {
     isPreOrder: boolean;
     pickupTime: string;
     paymentMethod: string;
+    fulfillmentType: FulfillmentType;
+    deliveryLocationId?: string;
   }) => Order | null;
+  getOrderById: (id: string) => Order | undefined;
   redeemReward: (reward: Reward) => boolean;
   payWithQR: (amount: number, merchant: string) => boolean;
 }
@@ -137,10 +156,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
       isPreOrder: boolean;
       pickupTime: string;
       paymentMethod: string;
+      fulfillmentType: FulfillmentType;
+      deliveryLocationId?: string;
     }): Order | null => {
       if (cart.length === 0 || !activeCafeId) return null;
 
-      let total = cartTotal;
+      if (options.fulfillmentType === "delivery" && !options.deliveryLocationId) {
+        toast.error("Please select a delivery location");
+        return null;
+      }
+
+      const deliveryLocation =
+        options.deliveryLocationId != null
+          ? getDeliveryLocation(options.deliveryLocationId)
+          : undefined;
+
+      const deliveryFee =
+        options.fulfillmentType === "delivery" ? DELIVERY_FEE : 0;
+
+      let total = cartTotal + deliveryFee;
       if (activeDiscount) {
         total = Math.max(0, total - activeDiscount.amount);
       }
@@ -153,6 +187,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const cafe = getCafeById(activeCafeId);
       const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
       const pointsEarned = Math.floor(total * 2);
+      const createdAt = new Date().toISOString();
+      const driver = getDriverForOrder(orderId);
 
       const order: Order = {
         id: orderId,
@@ -164,12 +200,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
           price: i.menuItem.price,
         })),
         total,
-        status: "preparing",
+        status:
+          options.fulfillmentType === "delivery" ? "confirmed" : "preparing",
         pickupTime: options.pickupTime,
-        createdAt: new Date().toISOString(),
+        createdAt,
         isPreOrder: options.isPreOrder,
         pointsEarned,
         qrCode: `KK-${orderId.split("-")[1]}`,
+        fulfillmentType: options.fulfillmentType,
+        deliveryLocation,
+        deliveryFee: deliveryFee || undefined,
+        estimatedDeliveryAt:
+          options.fulfillmentType === "delivery" && options.deliveryLocationId
+            ? computeEstimatedDeliveryAt(createdAt, options.deliveryLocationId)
+            : undefined,
+        driverName: options.fulfillmentType === "delivery" ? driver.name : undefined,
+        driverPhone:
+          options.fulfillmentType === "delivery" ? driver.phone : undefined,
       };
 
       if (options.paymentMethod === "wallet") {
@@ -190,14 +237,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
         type: "payment",
         amount: -total,
         date: new Date().toISOString(),
-        description: `Order ${orderId}`,
+        description: `Order ${orderId}${
+          options.fulfillmentType === "delivery" ? " (Delivery)" : ""
+        }`,
         pointsEarned,
       };
       setTransactions((prev) => [tx, ...prev]);
       setOrders((prev) => [order, ...prev]);
       clearCart();
       if (activeDiscount) setActiveDiscount(null);
-      toast.success("Order placed successfully!");
+      toast.success(
+        options.fulfillmentType === "delivery"
+          ? "Delivery order placed! Track your rider live."
+          : "Order placed successfully!"
+      );
       return order;
     },
     [
@@ -208,6 +261,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
       studentData.walletBalance,
       clearCart,
     ]
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOrders((prev) =>
+        prev.map((order) => {
+          if (order.fulfillmentType !== "delivery") return order;
+          const stage = getSimulatedDeliveryStage(order.createdAt);
+          const status = deliveryStageToStatus(stage);
+          if (order.status === status) return order;
+          return { ...order, status };
+        })
+      );
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getOrderById = useCallback(
+    (id: string) => orders.find((o) => o.id === id),
+    [orders]
   );
 
   const redeemReward = useCallback(
@@ -298,6 +371,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       cartItemCount,
       topUpWallet,
       placeOrder,
+      getOrderById,
       redeemReward,
       payWithQR,
     }),
@@ -320,6 +394,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       cartItemCount,
       topUpWallet,
       placeOrder,
+      getOrderById,
       redeemReward,
       payWithQR,
     ]
