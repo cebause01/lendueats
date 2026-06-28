@@ -1,5 +1,6 @@
 /** Local image assets — bundled in /public/images for reliable loading */
-const local = (path: string) => `/images/${path}`;
+const ASSET_VERSION = "20250628";
+const local = (path: string) => `/images/${path}?v=${ASSET_VERSION}`;
 
 export const images = {
   logo: "/brand/app-logo.png",

@@ -10,38 +10,17 @@ BASE = os.path.join(os.path.dirname(__file__), "..", "public", "images")
 # Each entry: local path -> (Unsplash photo slug, item label for logging)
 DOWNLOADS: dict[str, tuple[str, str]] = {
     # ── Cafes ──────────────────────────────────────────────────────────────
-    "cafes/cafe-1.jpg": (
-        "photo-1555396273-367ea4eb4db5",
-        "Cafe Bentara – cafeteria interior",
-    ),
-    "cafes/cafe-2.jpg": (
-        "photo-1517248135467-4c7edcad34c4",
-        "Dewan Laksamana – dining hall",
-    ),
-    "cafes/cafe-3.jpg": (
-        "photo-1754103315503-519382a12ee0",
-        "Cafe Jebat – hawker stall",
-    ),
-    "cafes/cafe-4.jpg": (
-        "photo-1596797038530-2c107229654b",
-        "Cafe Tun Sabariah – Malay food",
-    ),
-    "cafes/cafe-5.jpg": (
-        "photo-1495474472287-4d71bcdd2085",
-        "Cafe Sunshine – coffee",
-    ),
+    # cafe-1.jpg — local photo (Cafe Bentara / Dewan Bentara, UiTM Lendu)
+    # cafe-2.jpg — local photo (Dewan Laksamana, UiTM Lendu)
+    # cafe-3.jpg — local photo (Cafe Jebat, UiTM Lendu)
+    # cafe-4.jpg — local photo (Cafe Tun Sabariah, UiTM Lendu)
+    # cafe-5.jpg — local photo (Cafe Sunshine, UiTM Lendu)
     "cafes/cafe-6.jpg": (
         "photo-1677921755291-c39158477b8e",
         "Pakya Sinar – nasi lemak",
     ),
-    "cafes/cafe-7.jpg": (
-        "photo-1559339352-11d035aa65de",
-        "Cafe Richiamo – cafe interior",
-    ),
-    "cafes/cafe-8.jpg": (
-        "photo-1680675494363-75bbf9838a09",
-        "Cafe Pedas Manis – spicy noodles",
-    ),
+    # cafe-7.jpg — local photo (Cafe Richiamo, UiTM Lendu)
+    # cafe-8.jpg — local photo (Cafe Pedas Manis, UiTM Lendu)
     # ── Menu items (matched to menu name) ───────────────────────────────────
     "menu/m-1.jpg": (
         "photo-1741241857887-321f7fbcacf2",

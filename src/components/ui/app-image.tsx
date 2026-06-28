@@ -42,18 +42,25 @@ export function AppImage({
   }
 
   if (fill) {
+    const isLocalAsset =
+      src.startsWith("/images/") || src.startsWith("/brand/");
+
     return (
       <Image
         src={src}
         alt={alt}
         fill
         priority={priority}
+        unoptimized={isLocalAsset}
         onError={() => setError(true)}
         className={cn("object-cover", className)}
         sizes="(max-width: 448px) 100vw, 448px"
       />
     );
   }
+
+  const isLocalAsset =
+    src.startsWith("/images/") || src.startsWith("/brand/");
 
   return (
     <Image
@@ -62,6 +69,7 @@ export function AppImage({
       width={width ?? 80}
       height={height ?? 80}
       priority={priority}
+      unoptimized={isLocalAsset}
       onError={() => setError(true)}
       className={cn("object-cover", className)}
     />
